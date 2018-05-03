@@ -87,7 +87,7 @@ int main(void)
             // If the user entered no commands, do nothing
             continue;
         }
-        
+
         // Exit the shell if args[0] is the built-in "exit" command
         if (strcmp(args[0], "exit") == 0)
         {
@@ -101,17 +101,44 @@ int main(void)
             printf("%d: '%s'\n", i, args[i]);
         }
 #endif
+        //Check for cd
+        if (strcmp(args[0], "cd") == 0)
+        {   
+            //Check if Directory Provided
+            if (args_count == 2)
+            {   
+                //Check if chdir works
+                if (chdir(args[1]) != -1)
+                {
+                    printf("Changed to directory %s\n", args[1]);
+                    continue;
+                }
+                else
+                {
+                    perror("Failed to change directory");
+                }
+            }
+            else
+            {
+                perror("Failed to change directory");
+            }
+        }
+
+        //fork process to allow for other commands to be executed while main continues looping
         int child = fork();
 
+        //child should be a positive number or 0
         if (child < 0)
         {
             perror("Fork Failed\n");
             exit(1);
         }
+        //execute argument
         else if (child == 0)
         {
             execvp(args[0], args);
         }
+        //wait for child
         else
         {
             waitpid(child, NULL, 0);
