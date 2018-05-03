@@ -7,11 +7,25 @@ Add your answers inline, below, with your pull request.
 1. List all of the main states a process may be in at any point in time on a
    standard Unix system. Briefly explain what each of these states mean.
 
+* Ready: It is available to begin running but the CPU has yet to instigate the process.
+* Running: CPU is running instructions of the process.
+* Waiting: An event that the process doesn't control has yet to happen and therefore it is in a state of flux until it happens, e.g. user input or another process it relies upon in some fashion.
+* Terminated: It is no longer running and should no longer be in the table.
+
 2. What is a Zombie Process? How does it get created? How does it get destroyed?
+
+* A zombie process is one that has no more instructions to be processed but is still living on the process table.  
+* It is created when a process terminates but the parent process hasn't accepted its exit status.
+* It is destroyed when the parent makes a wait() system call and reaps the process.
 
 3. Describe the job of the Scheduler in the OS in general.
 
+* The Scheduler allocates resources to jobs; I understand jobs to be a set of related processes.  It makes sure that jobs are not prioritized and that they are executed without prejudice.
+
 4. Describe the benefits of the MLFQ over a plain Round-Robin scheduler.
+
+* The MLFQ "learns" the nature of the processes it runs and can schedule them more appropriately.  It has multiple queues with varying priority levels; these levels are based upon past experience the MLFQ has with the process and this is how it determines the priority the process has.
+* A Round-Robin scheduler does no "learning" but operates in a FIFO fashion.  Each process receives a time alotment, and if it doesn't finish in the alotted time, it is placed in the back of a queue to be continued later.  
 
 ## Programming Exercise: The Lambda School Shell (`lssh`)
 
