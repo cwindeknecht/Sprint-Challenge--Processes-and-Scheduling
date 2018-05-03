@@ -82,31 +82,25 @@ int main(void)
 
         // Parse input into individual arguments
         parse_commandline(commandline, args, &args_count);
-
         if (args_count == 0)
         {
             // If the user entered no commands, do nothing
             continue;
         }
-
+        
         // Exit the shell if args[0] is the built-in "exit" command
         if (strcmp(args[0], "exit") == 0)
         {
             break;
         }
-
 #if DEBUG
-
         // Some debugging output
-
         // Print out the parsed command line in args[]
         for (int i = 0; args[i] != NULL; i++)
         {
             printf("%d: '%s'\n", i, args[i]);
         }
-
 #endif
-
         int child = fork();
 
         if (child < 0)
