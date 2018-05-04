@@ -94,6 +94,7 @@ int main(void)
             break;
         }
 #if DEBUG
+
         // Some debugging output
         // Print out the parsed command line in args[]
         for (int i = 0; args[i] != NULL; i++)
@@ -101,12 +102,13 @@ int main(void)
             printf("%d: '%s'\n", i, args[i]);
         }
 #endif
+
         //Check for cd
         if (strcmp(args[0], "cd") == 0)
-        {   
+        {
             //Check if Directory Provided
             if (args_count == 2)
-            {   
+            {
                 //Check if chdir works
                 if (chdir(args[1]) != -1)
                 {
@@ -121,6 +123,17 @@ int main(void)
             else
             {
                 perror("Failed to change directory");
+            }
+        }
+
+        // check for possibility of background command
+        // pwd & or ls -al & for example
+        if (args_count == 2 || args_count == 3)
+        {
+            //set pointer to NULL if 3rd argument is background command
+            if (strcmp(args[1], "&") || strcmp(args[2], "&") == 0)
+            {
+                args[2] = NULL;
             }
         }
 
@@ -141,7 +154,10 @@ int main(void)
         //wait for child
         else
         {
-            waitpid(child, NULL, 0);
+            //wait until orphan/zombie processes send exit signal
+            //and are accepted by the parent
+            while (waitpid(child, NULL, WNOHANG) > 0)
+                ;
         }
     }
     return 0;
