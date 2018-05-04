@@ -187,7 +187,8 @@ more zombies to reap. Then the program continues on.
 
 What happens if you don't do this?
 
-Mini stretch challenge: wait for the `SIGCHLD` signal and put the above `while`
+Mini stretch challenge: w
+ait for the `SIGCHLD` signal and put the above `while`
 loop in there instead.
 
 Note that you might get weird output when doing this, like the prompt might

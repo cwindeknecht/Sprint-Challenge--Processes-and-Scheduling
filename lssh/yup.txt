@@ -1,0 +1,9 @@
+total 24
+drwxrwxrwx 0 root root  4096 May  4 10:52 .
+drwxrwxrwx 0 root root  4096 May  3 16:56 ..
+-rwxrwxrwx 1 root root    13 May  3 16:55 .gitignore
+-rwxrwxrwx 1 root root 13552 May  4 10:51 lssh
+-rwxrwxrwx 1 root root  4617 May  4 10:51 lssh.c
+-rwxrwxrwx 1 root root    40 May  3 16:55 Makefile
+drwxrwxrwx 0 root root  4096 May  3 18:28 yup
+-rwxrwxrwx 1 root root     0 May  4 10:52 yup.txt

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
@@ -149,6 +150,20 @@ int main(void)
         //execute argument
         else if (child == 0)
         {
+            for (int i = 0; args[i] != NULL; i++)
+            {
+                if (strcmp(args[i], ">") == 0)
+                {
+                    int fd;
+                    char *filename = args[args_count - 1];
+                    // Admittedly, didn't read about these options extensively
+                    // on the man page
+                    fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC,
+                    S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+                    dup2(fd, 1);
+                    args[i] = NULL;
+                }
+            }
             execvp(args[0], args);
         }
         //wait for child
